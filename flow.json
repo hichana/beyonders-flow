@@ -1,4 +1,19 @@
 {
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account"
+		}
+	},
+	"contracts": {
+		"Beyond": {
+			"source": "./contracts/Beyond.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "$VITE_TESTNET_ACCOUNT"
+			}
+		}
+    },
 	"networks": {
 		"emulator": "127.0.0.1:3569",
 		"mainnet": "access.mainnet.nodes.onflow.org:9000",
@@ -9,6 +24,39 @@
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",
 			"key": "d36d1acf9a1b6611c112d5c826dabc846e6069ffca4eaed51a1383770d9cf69a"
+		},
+		"emulator-user1": {
+			"address": "01cf0e2f2f715450",
+			"key": "b0566e46eea9982b6ce836e51f61b4b305695a6866016f330f294155c9508425"
+		},
+		"testnet-account": {
+			"address": "$TESTNET_ACCOUNT",
+			"key": {
+				"type": "hex",
+				"index": 0,
+				"signatureAlgorithm": "$TESTNET_ACCOUNT_SIG_ALGO",
+				"hashAlgorithm": "$TESTNET_ACCOUNT_HASH_ALGO",
+				"privateKey": "$TESTNET_ACCOUNT_PRIVATE_KEY"
+			}
+		},
+		"testnet-user1": {
+			"address": "$TESTNET_USER1",
+			"key": {
+				"type": "hex",
+				"index": 0,
+				"signatureAlgorithm": "$TESTNET_USER1_SIG_ALGO",
+				"hashAlgorithm": "$TESTNET_USER1_HASH_ALGO",
+				"privateKey": "$TESTNET_USER1_PRIVATE_KEY"
+			}
+		}
+	},
+	"deployments": {
+		"emulator": {
+			"emulator-account": ["Beyond"]
+		},
+		"testnet": {
+			"testnet-account": ["Beyond"]
 		}
 	}
+
 }
