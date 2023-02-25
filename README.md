@@ -1,8 +1,9 @@
 # EMULATOR
 - need to have golang and overflow installed: https://github.com/bjartek/overflow
 - emulator
-    `flow emulator -v`
+    `flow emulator -v` (needs its own terminal window)
     `go run ./overflow/setup_emulator/setup_emulator.go`
+    `flow dev-wallet` (needs its own terminal window)
 
 # GETTING TEST NFTS ON TESTNET
 - testnet floats: https://testnet.floats.city/

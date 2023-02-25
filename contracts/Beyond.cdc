@@ -15,9 +15,11 @@ pub contract Beyond: NonFungibleToken {
 
     pub struct Affiliate{
         pub var payoutRecipient: Address
+        pub let created: UFix64
 
         init(payoutRecipient: Address) {
             self.payoutRecipient = payoutRecipient
+            self.created = getCurrentBlock().timestamp
         }
 
         pub fun changeRecipientAddress(newRecipient: Address) {
