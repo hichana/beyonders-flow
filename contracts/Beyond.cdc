@@ -10,6 +10,21 @@ pub contract Beyond: NonFungibleToken {
 
     access(account) var paymentRecipient: Address
     access(account) var mintPrice: UFix64
+    access(contract) let affiliatesByUUID: {UInt64: Affiliate}
+    access(contract) let affiliatesByAddress: {Address: UInt64}
+
+    pub struct Affiliate{
+        pub var payoutRecipient: Address
+
+        init(payoutRecipient: Address) {
+            self.payoutRecipient = payoutRecipient
+        }
+
+        pub fun changeRecipientAddress(newRecipient: Address) {
+            self.payoutRecipient = newRecipient
+        }
+
+    }
 
     /// The event that is emitted when the contract is created
     pub event ContractInitialized()
@@ -39,7 +54,7 @@ pub contract Beyond: NonFungibleToken {
         pub let description: String
         pub let thumbnail: String
         access(self) let metadata: {String: AnyStruct}
-    
+   
         init(
             id: UInt64,
             name: String,
@@ -296,6 +311,10 @@ pub contract Beyond: NonFungibleToken {
             metadata: metadata,
         )
 
+        // add the affiliate, initially payout address is minter's address
+        Beyond.affiliatesByUUID.insert(key: newNFT.uuid, Beyond.Affiliate(paymentRecipient: recipient.owner!.address))
+        Beyond.affiliatesByAddress.insert(key: recipient.owner!.address, newNFT.uuid)
+
         // deposit it in the recipient's account using their reference
         recipient.deposit(token: <-newNFT)
 
@@ -319,12 +338,39 @@ pub contract Beyond: NonFungibleToken {
 
     }
 
+    pub fun getAllAffiliatesByUUID(): {UInt64: Beyond.Affiliate} {
+        return Beyond.affiliatesByUUID
+    }
+
+    pub fun getAffiliatesByUUIDKeys(): [UInt64] {
+        return Beyond.affiliatesByUUID.keys
+    }
+
+    pub fun getAffiliateByUUID(uuid: UInt64): Beyond.Affiliate? {
+        return Beyond.affiliatesByUUID[uuid]
+    }
+
+    pub fun getAllAffiliatesByAddress(): {Address: UInt64} {
+        return Beyond.affiliatesByAddress
+    }
+
+    pub fun getAffiliatesByAddressKeys(): [Address] {
+        return Beyond.affiliatesByAddress.keys
+    }
+
+    pub fun getAffiliateByAddress(address: Address): Beyond.Affiliate? {
+        let uuid = Beyond.affiliatesByAddress[address]!
+        return Beyond.getAffiliateByUUID(uuid: uuid)!
+    }
+
     init() {
         // Initialize the total supply
         self.totalSupply = 0
 
         self.paymentRecipient = self.account.address
         self.mintPrice = 1.0
+        self.affiliatesByUUID = {}
+        self.affiliatesByAddress = {}
 
         // Set the named paths
         self.CollectionStoragePath = /storage/beyondCollection
