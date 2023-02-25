@@ -12,17 +12,17 @@ func main() {
 	// create the overflow client
 	c := o.Overflow(o.WithNetwork(flow_network), o.WithFlowForNewUsers(1000.0))
 
-	// USER1 MINTS A BEYOND NFT
+	// SERVICE ACCOUNT MINTS A BEYOND NFT
 	c.Tx(
 		"Beyond/mint_user_nft",
 		o.WithArg("mintPrice", 1.0),
-		o.WithSigner("user1")).
+		o.WithSigner("account")).
 		Print()
 
-	// get user1 affiliate
+	// GET SERVICE ACCOUNT AFFILIATE
 	c.Script(
 		"Beyond/get_affiliate_by_address",
-		o.WithArg("address", "user1")).
+		o.WithArg("address", "account")).
 		Print()
 
 }
