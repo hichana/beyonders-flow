@@ -1,4 +1,5 @@
 import NonFungibleToken from "./core/NonFungibleToken.cdc"
+import FlowToken from "./core/FlowToken.cdc"
 import MetadataViews from "./core/MetadataViews.cdc"
 import FungibleToken from "./core/FungibleToken.cdc"
 
@@ -22,10 +23,10 @@ pub contract Beyond: NonFungibleToken {
     /// Storage and Public Paths
     pub let CollectionStoragePath: StoragePath
     pub let CollectionPublicPath: PublicPath
-    pub let MinterStoragePath: StoragePath
+    pub let AdminStoragePath: StoragePath
 
     /// The core resource that represents a Non Fungible Token. 
-    /// New instances will be created using the NFTMinter resource
+    /// New instances will be created
     /// and stored in the Collection resource
     ///
     pub resource NFT: NonFungibleToken.INFT, MetadataViews.Resolver {
@@ -301,6 +302,23 @@ pub contract Beyond: NonFungibleToken {
         Beyond.totalSupply = Beyond.totalSupply + UInt64(1)
     }
 
+    pub resource Admin{
+
+        pub fun changeMintPrice(newMintPrice: UFix64) {
+            Beyond.mintPrice = newMintPrice
+        }
+
+        pub fun changePaymentRecipient(newPaymentRecipient: Address) {
+
+            // borrow the receiver cap and check it
+            let flowTokenReceiverCap = getAccount(newPaymentRecipient).getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/flowTokenReceiver)
+            assert(flowTokenReceiverCap.borrow() != nil, message: "Missing or mis-typed FlowToken receiver")
+
+            Beyond.paymentRecipient = newPaymentRecipient
+        }
+
+    }
+
     init() {
         // Initialize the total supply
         self.totalSupply = 0
@@ -311,7 +329,7 @@ pub contract Beyond: NonFungibleToken {
         // Set the named paths
         self.CollectionStoragePath = /storage/beyondCollection
         self.CollectionPublicPath = /public/beyondCollection
-        self.MinterStoragePath = /storage/beyondMinter
+        self.AdminStoragePath = /storage/beyondAdmin
 
         // Create a Collection resource and save it to storage
         let collection <- create Collection()
@@ -323,7 +341,10 @@ pub contract Beyond: NonFungibleToken {
             target: self.CollectionStoragePath
         )
 
+        // Create an Admin resource and save it to storage
+        let admin <- create Admin()
+        self.account.save(<-admin, to: self.AdminStoragePath)
+
         emit ContractInitialized()
     }
 }
- 
