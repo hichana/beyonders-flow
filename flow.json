@@ -6,11 +6,39 @@
 		}
 	},
 	"contracts": {
+		"Apples": {
+			"source": "./contracts/Apples.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "$TESTNET_ACCOUNT"
+			}
+		},
+		"Black": {
+			"source": "./contracts/Black.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "$TESTNET_ACCOUNT"
+			}
+		},
+		"Cats": {
+			"source": "./contracts/Cats.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "$TESTNET_ACCOUNT"
+			}
+		},
+		"Dogs": {
+			"source": "./contracts/Dogs.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "$TESTNET_ACCOUNT"
+			}
+		},
 		"Beyond": {
 			"source": "./contracts/Beyond.cdc",
 			"aliases": {
 				"emulator": "f8d6e0586b0a20c7",
-				"testnet": "$VITE_TESTNET_ACCOUNT"
+				"testnet": "$TESTNET_ACCOUNT"
 			}
 		},
 		"FlowToken": {
@@ -37,12 +65,48 @@
 				"mainnet": "1d7e57aa55817448"
 			}
 		},
+		"NFTCatalog": {
+			"source": "./contracts/core/NFTCatalog.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "324c34e1c517e4db",
+				"mainnet": "49a7cda3a1eecc29"
+			}
+		},
+		"NFTCatalogAdmin": {
+			"source": "./contracts/core/NFTCatalogAdmin.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7"
+			}
+		},
+		"NFTRetrieval": {
+			"source": "./contracts/core/NFTRetrieval.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "324c34e1c517e4db",
+				"mainnet": "49a7cda3a1eecc29"
+			}
+		},
 		"NonFungibleToken": {
 			"source": "./contracts/core/NonFungibleToken.cdc",
 			"aliases": {
 				"emulator": "f8d6e0586b0a20c7",
 				"testnet": "631e88ae7f1d7c20",
 				"mainnet": "1d7e57aa55817448"
+			}
+		},
+		"Oranges": {
+			"source": "./contracts/Oranges.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "$TESTNET_ACCOUNT"
+			}
+		},
+		"White": {
+			"source": "./contracts/White.cdc",
+			"aliases": {
+				"emulator": "f8d6e0586b0a20c7",
+				"testnet": "$TESTNET_ACCOUNT"
 			}
 		}
     },
@@ -85,9 +149,18 @@
 	"deployments": {
 		"emulator": {
 			"emulator-account": [
+				"Apples",
+				"Black",
+				"Cats",
+				"Dogs",
                 "Beyond",
 				"NonFungibleToken",
-				"MetadataViews"
+				"MetadataViews",
+				"NFTCatalog",
+				"NFTCatalogAdmin",
+				"NFTRetrieval",
+				"Oranges",
+				"White"
             ],
             "emulator-user1": []
 		},
