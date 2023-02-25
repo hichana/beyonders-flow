@@ -271,6 +271,10 @@ pub contract Beyond: NonFungibleToken {
         recipient: &{NonFungibleToken.CollectionPublic},
         payment: @FungibleToken.Vault
     ) {
+        pre {
+            payment.balance >= Beyond.mintPrice: "Payment amount is not correct"
+        }
+
         let metadata: {String: AnyStruct} = {}
         let currentBlock = getCurrentBlock()
         metadata["mintedBlock"] = currentBlock.height
