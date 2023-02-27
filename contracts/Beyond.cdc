@@ -133,9 +133,9 @@ pub contract Beyond: NonFungibleToken {
                 case Type<MetadataViews.NFTCollectionDisplay>():
                     let media = MetadataViews.Media(
                         file: MetadataViews.HTTPFile(
-                            url: "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/07/what_to_know_apples_green_red_1296x728_header-1024x575.jpg"
+                            url: "https://bafybeifvhszdabbl7bkzb3hjzw6dzsaddxwj2iykqiqm2egw5xq5uta6ou.ipfs.w3s.link/Beyond.png"
                         ),
-                        mediaType: "image/jpeg"
+                        mediaType: "image/png"
                     )
                     return MetadataViews.NFTCollectionDisplay(
                         name: "The Beyond Collection",
@@ -309,7 +309,7 @@ pub contract Beyond: NonFungibleToken {
             id: Beyond.totalSupply,
             name: "Beyond NFT",
             description: "Spread the word about NFT projects you love, get paid and go beyond just being a collector.",
-            thumbnail: "https://upload.wikimedia.org/wikipedia/commons/1/15/Cat_August_2010-4.jpg",
+            thumbnail: "https://bafybeifvhszdabbl7bkzb3hjzw6dzsaddxwj2iykqiqm2egw5xq5uta6ou.ipfs.w3s.link/Beyond.png",
             metadata: metadata,
         )
 
